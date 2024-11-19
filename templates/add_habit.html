@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Habit</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/add_habit.css">
+</head>
+<body>
+    <header>
+        <h1>Add a New Habit</h1>
+        <p>Fill in the details below to start tracking a new habit.</p>
+    </header>
+
+    <main>
+        <form action="/add-habit" method="POST" class="add-habit-form">
+            <label for="name">Habit Name:</label>
+            <input type="text" id="name" name="name" required placeholder="Enter habit name">
+            
+            <label for="description">Habit Description:</label>
+            <textarea id="description" name="description" required placeholder="Enter habit description"></textarea>
+            
+            <button type="submit">Add Habit</button>
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Habit Tracker</p>
+    </footer>
+</body>
+</html>

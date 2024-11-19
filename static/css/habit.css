@@ -1,0 +1,103 @@
+/* Center Habit Name */
+header h1 {
+    text-align: center;
+    font-size: 36px;
+    margin: 20px 0;
+    color: #4CAF50;
+}
+
+/* Layout for Habit Details */
+.habit-details {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.habit-description {
+    margin-bottom: 20px;
+}
+
+.habit-description h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.habit-description p {
+    font-size: 16px;
+    color: #555;
+}
+
+/* Streak Section */
+.habit-streak h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.streak-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.streak-rectangle {
+    width: 20px;
+    height: 20px;
+    background-color: #4CAF50;
+    border-radius: 3px;
+}
+
+.habit-streak p {
+    font-size: 18px;
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+.streak-rectangle.low {
+    background-color: red;
+}
+
+.streak-rectangle.medium {
+    background-color: yellow;
+}
+
+.streak-rectangle.high {
+    background-color: green;
+}
+
+
+
+.streak-rectangle {
+    width: 20px;
+    height: 20px;
+    margin: 2px;
+    border-radius: 3px;
+}
+
+.streak-rectangle.completed {
+    background-color: #4CAF50;
+}
+
+.streak-rectangle.skipped {
+    background-color: #ccc;
+}
+.mark-today-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.mark-today-button:hover {
+    background-color: #45a049;
+}

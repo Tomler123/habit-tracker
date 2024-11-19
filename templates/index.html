@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+<body>
+
+<header>
+    <h1>Welcome to Habit Tracker</h1>
+    <p>Track your daily habits and stay consistent. Click on a habit to view its details or mark your progress.</p>
+</header>
+
+<main>
+
+<!-- Add Habit Button -->
+<div class="add-habit-container">
+    <button onclick="location.href='/add-habit'">Add Habit</button>
+</div>
+
+<!-- Display Habits From Python -->
+<div class="habits-container">
+    {% for habit in habits %}
+    <div class="habit-card" onclick="location.href='/habit/{{ habit.id }}'">
+        <h3>{{ habit.name }}</h3>
+        <p>{{ habit.description }}</p>
+        <button class="delete-button" onclick="event.stopPropagation(); confirmDelete({{ habit.id }})">
+            🗑️
+        </button>
+    </div>
+    {% endfor %}
+</div>
+
+
+
+</main>
+<footer>
+    <p>&copy; 2024 Habit Tracker</p>
+</footer>
+
+<script>
+fetch('/habits')
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        const habitsContainer = document.getElementById('habits');
+        data.forEach(habit => {
+            const habitDiv = document.createElement('div');
+            habitDiv.innerHTML = `<h3>${habit.name}</h3><p>${habit.description}</p>`;
+            habitsContainer.appendChild(habitDiv);
+        });
+    });
+
+    function confirmDelete(habitId) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Call the delete function
+                deleteHabit(habitId);
+            }
+        });
+    }
+    
+    function deleteHabit(habitId) {
+        fetch(`/delete-habit/${habitId}`, {
+            method: 'POST',
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message === 'Habit deleted successfully!') {
+                Swal.fire(
+                    'Deleted!',
+                    'Your habit has been deleted.',
+                    'success'
+                ).then(() => {
+                    window.location.reload();
+                });
+            } else {
+                Swal.fire(
+                    'Error!',
+                    'There was a problem deleting your habit.',
+                    'error'
+                );
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            Swal.fire(
+                'Error!',
+                'An error occurred while deleting the habit.',
+                'error'
+            );
+        });
+    }
+    
+        
+</script>        
+</body>
+</html>

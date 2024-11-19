@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ habit.name }} - Habit Tracker</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="/static/css/habit.css">
+</head>
+<body>
+
+<header>
+    <h1>{{ habit.name }}</h1>
+</header>
+
+<main>
+    <div class="habit-details">
+        <!-- Description Section -->
+        <div class="habit-description">
+            <h2>Description</h2>
+            <p>{{ habit.description }}</p>
+        </div>
+
+        <!-- Streak Section -->
+        <div class="habit-streak">
+            <h2>Streak</h2>
+            <button onclick="markForToday({{ habit.id }})" class="mark-today-button">Mark for Today</button>
+            <div class="streak-container">
+                {% for day_completed in streak_representation %}
+                <div class="streak-rectangle {% if day_completed %}completed{% else %}skipped{% endif %}"></div>
+                {% endfor %}
+            </div>
+            <p>Streak: {{ current_streak }} Days</p>
+        </div>
+        
+        
+        
+        
+    </div>
+    <button onclick="location.href='/'" style="margin: 20px;">Back to Home</button>
+
+</main>
+
+<footer>
+    <p>&copy; 2024 Habit Tracker</p>
+</footer>
+
+<script>
+    function markForToday(habitId) {
+        fetch(`/mark-today/${habitId}`, {
+            method: 'POST',
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.message === 'Habit marked for today!') {
+                toastr.success("Habit marked for today!");
+                setTimeout(() => window.location.reload(), 1000);
+            } else {
+                toastr.error("Error marking habit for today.");
+            }
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            toastr.error("An error occurred.");
+        });
+    }
+    
+    
+    
+</script>
+
+</body>
+</html>
